@@ -1,0 +1,1517 @@
+Here is the complete, interactive, mobile-first Single Page Application (SPA)
+implementing all screen designs and user flows with Tailwind CSS, accessible
+form controls, and the required validation logic.
+
+Save the following code into an HTML file (e.g. index.html) and open it in any
+web browser:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolyU Design - Competition & Award Subsidy Scheme</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons via CDN for crisp UI rendering -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#142E23', // Deep PolyU Forest Green seen across primary CTAs
+              light: '#E6EFE9',
+              green: '#2E7D32',
+              card: '#F8F9FA',
+              border: '#E2E8F0',
+              accent: '#C7E4D3'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            serif: ['Playfair Display', 'Georgia', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Focus styles adhering to WCAG 2.1 AA */
+    *:focus-visible {
+      outline: 2px solid #142E23 !important;
+      outline-offset: 2px !important;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #CBD5E1;
+      border-radius: 4px;
+    }
+    /* Signature styling */
+    .signature-font {
+      font-family: 'Playfair Display', 'Brush Script MT', cursive, serif;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900 antialiased min-h-screen">
+
+  <!-- Desktop wrapper to preserve strict mobile-first viewport (max-w-md) -->
+  <main class="max-w-md mx-auto bg-white min-h-screen shadow-2xl relative flex flex-col justify-between overflow-x-hidden border-x border-gray-200">
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M01: Sign In Portal (Default Visible)                   -->
+    <!-- ============================================================== -->
+    <section id="screen-m01" class="flex-1 flex flex-col justify-between" aria-label="Sign In Portal">
+      <!-- Top Hero Image Container with Dark Overlay -->
+      <div class="relative bg-[#162e22] text-white p-6 pt-10 pb-12 overflow-hidden">
+        <!-- Subdued Architecture Silhouette Backsplash -->
+        <div class="absolute inset-0 opacity-20 bg-cover bg-center pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800&auto=format&fit=crop');"></div>
+        <div class="relative z-10">
+          <div class="flex items-center gap-2 mb-8">
+            <div class="w-7 h-7 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-400/40">
+              <i data-lucide="sprout" class="w-4 h-4 text-emerald-300"></i>
+            </div>
+            <div>
+              <p class="font-bold text-sm tracking-wider uppercase text-emerald-100">PolyU Design</p>
+              <p class="text-[10px] text-emerald-200/80">Competition & Award Subsidy Scheme</p>
+            </div>
+          </div>
+          <p class="text-[10px] uppercase tracking-widest font-semibold text-emerald-300 mb-1">Empowering Design Excellence</p>
+          <h1 class="text-2xl font-bold leading-tight">Design Awards &amp; Competition Subsidy</h1>
+        </div>
+      </div>
+
+      <!-- Main Sign In Card Container -->
+      <div class="p-6 -mt-4 bg-white rounded-t-3xl flex-1 flex flex-col justify-between relative z-20">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Portal Sign In</h2>
+          <div class="flex items-center gap-2 text-xs font-semibold text-emerald-800 mb-4 bg-emerald-50 w-fit px-2 py-1 rounded">
+            <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+            <span>PolyU NetID Access</span>
+          </div>
+          <p class="text-xs text-gray-600 mb-6 leading-relaxed">
+            Select your university authorization role and input your university credentials to access the award application ledger.
+          </p>
+
+          <!-- Role Selector -->
+          <fieldset class="mb-5">
+            <legend class="text-xs font-bold text-gray-800 mb-2">Select Your Portal Role</legend>
+            <div class="grid grid-cols-3 gap-1 bg-gray-100 p-1 rounded-xl text-center text-xs font-medium" role="radiogroup">
+              <button type="button" class="py-2.5 rounded-lg bg-brand-dark text-white font-semibold shadow-sm focus:ring-2 focus:ring-emerald-700">Student</button>
+              <button type="button" class="py-2.5 rounded-lg text-gray-700 hover:text-black">Admin</button>
+              <button type="button" class="py-2.5 rounded-lg text-gray-700 hover:text-black">Endorsers</button>
+            </div>
+          </fieldset>
+
+          <!-- Info & Notice Banners -->
+          <div class="space-y-3 mb-6">
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-700 flex gap-2.5">
+              <i data-lucide="info" class="w-4 h-4 text-emerald-800 flex-shrink-0 mt-0.5"></i>
+              <p><strong class="font-semibold text-gray-900">Active: Design Student</strong> — For enrolled School of Design BA (Hons), MSc, and MDes students submitting competition subsidies.</p>
+            </div>
+
+            <div class="p-3 bg-emerald-50/70 rounded-xl border border-emerald-200 text-xs text-emerald-950 flex gap-2.5">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-emerald-700 flex-shrink-0 mt-0.5"></i>
+              <div>
+                <p class="font-semibold text-emerald-900">Eligibility Notice (Major Verification)</p>
+                <p class="text-[11px] text-emerald-800 mt-0.5">Scheme exclusively accessible to enrolled students within the School of Design. Non-design majors will be automatically routed to General Student Affairs.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Fields -->
+          <form id="login-form" onsubmit="event.preventDefault(); goToScreen('screen-m03');" class="space-y-4">
+            <div>
+              <label for="netid-input" class="block text-xs font-bold text-gray-800 mb-1">PolyU NetID / Student ID</label>
+              <div class="relative">
+                <i data-lucide="id-card" class="w-4 h-4 absolute left-3 top-3.5 text-gray-400"></i>
+                <input id="netid-input" type="text" value="21089412D" required class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl bg-gray-100 border border-transparent focus:bg-white focus:border-brand-dark transition-all outline-none" placeholder="Enter NetID">
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label for="password-input" class="text-xs font-bold text-gray-800">NetPassword</label>
+                <a href="#" class="text-xs text-emerald-800 hover:underline">Forgot NetPassword?</a>
+              </div>
+              <div class="relative">
+                <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3.5 text-gray-400"></i>
+                <input id="password-input" type="password" value="●●●●●●●●●●●●" required class="w-full pl-9 pr-10 py-2.5 text-sm rounded-xl bg-gray-100 border border-transparent focus:bg-white focus:border-brand-dark transition-all outline-none" placeholder="Enter institutional password">
+                <button type="button" class="absolute right-3 top-3 text-gray-500 hover:text-gray-700" aria-label="Toggle password visibility">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-1">
+              <input id="remember-me" type="checkbox" checked class="w-4 h-4 rounded text-brand-dark accent-brand-dark focus:ring-emerald-700 border-gray-300">
+              <label for="remember-me" class="text-xs font-medium text-gray-700">Remember NetID on this device</label>
+            </div>
+
+            <!-- Login Action Button -->
+            <button type="submit" class="w-full mt-4 py-3.5 bg-brand-dark text-white rounded-full font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#0e2118] transition-all shadow-md">
+              <i data-lucide="lock-keyhole" class="w-4 h-4"></i>
+              <span>Log in</span>
+            </button>
+          </form>
+
+          <div class="text-center mt-5 mb-8">
+            <button type="button" onclick="goToScreen('screen-m09')" class="text-xs text-emerald-900 font-medium hover:underline inline-flex items-center gap-1.5">
+              <i data-lucide="life-buoy" class="w-3.5 h-3.5"></i>
+              <span>Need help? Contact School General Office</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer Notice -->
+        <footer class="pt-6 border-t border-gray-200 text-center text-[10px] text-gray-500 space-y-1">
+          <p>© 2026 The Hong Kong Polytechnic University. School of Design.</p>
+          <p>Jockey Club Innovation Tower, 11 Yuk Choi Rd, Hung Hom</p>
+          <p class="font-medium text-gray-700">Atelier Academic Portal</p>
+          <div class="flex justify-center gap-3 pt-2 text-gray-600">
+            <span class="inline-flex items-center gap-1 bg-gray-100 px-2 py-0.5 rounded-full"><i data-lucide="shield-check" class="w-3 h-3 text-emerald-700"></i> Institutional SSO v2.4</span>
+            <span class="inline-flex items-center gap-1 bg-gray-100 px-2 py-0.5 rounded-full"><i data-lucide="lock" class="w-3 h-3 text-emerald-700"></i> InfoSec Compliant</span>
+          </div>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M02: Full Menu Navigation (Modal / Drawer view)        -->
+    <!-- ============================================================== -->
+    <section id="screen-m02" class="hidden min-h-screen bg-white flex flex-col p-6" aria-label="Main Navigation Menu">
+      <!-- Header -->
+      <div class="flex items-center justify-between pb-6 border-b border-gray-100">
+        <h2 class="text-xl font-bold text-gray-900">PolyU Design</h2>
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-2 rounded-full hover:bg-gray-100" aria-label="Close menu">
+          <i data-lucide="x" class="w-6 h-6 text-gray-700"></i>
+        </button>
+      </div>
+
+      <!-- Navigation List -->
+      <nav class="mt-6 flex-1">
+        <ul class="space-y-1">
+          <li>
+            <button type="button" onclick="goToScreen('screen-m03')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl bg-brand-dark text-white font-semibold text-sm text-left">
+              <i data-lucide="layout-grid" class="w-5 h-5"></i>
+              <span>Dashboard</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m08')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="user-circle" class="w-5 h-5 text-gray-600"></i>
+              <span>My Account</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m13')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="file-text" class="w-5 h-5 text-gray-600"></i>
+              <span>My Applications</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m10')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="history" class="w-5 h-5 text-gray-600"></i>
+              <span>Application History</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m13')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="power" class="w-5 h-5 text-gray-600"></i>
+              <span>Check Status</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m12')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
+              <span>Notifications</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m14')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="receipt" class="w-5 h-5 text-gray-600"></i>
+              <span>Claim Reimbursement</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m09')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="headset" class="w-5 h-5 text-gray-600"></i>
+              <span>Support</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="goToScreen('screen-m11')" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gray-100 font-medium text-sm text-left">
+              <i data-lucide="globe" class="w-5 h-5 text-gray-600"></i>
+              <span>Language</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M03: Student Dashboard                                 -->
+    <!-- ============================================================== -->
+    <section id="screen-m03" class="hidden flex-1 flex flex-col bg-gray-50 pb-10" aria-label="Student Subsidy Dashboard">
+      <!-- App Bar -->
+      <header class="bg-white border-b border-gray-200 px-5 py-3.5 flex items-center justify-between sticky top-0 z-30">
+        <button type="button" onclick="goToScreen('screen-m02')" class="p-1 rounded-md text-gray-800 hover:bg-gray-100" aria-label="Open Navigation Drawer">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+        <span class="font-bold text-gray-900 tracking-tight text-base">PolyU Design</span>
+        <button type="button" onclick="goToScreen('screen-m08')" class="w-8 h-8 rounded-full bg-brand-dark text-white text-xs font-bold flex items-center justify-center" aria-label="View My Account">
+          C
+        </button>
+      </header>
+
+      <!-- Welcome Hero Banner -->
+      <div class="p-4">
+        <div class="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-[11px] font-semibold text-gray-600 tracking-wider">ACADEMIC YEAR 2025/26</span>
+          </div>
+          <div class="inline-block bg-emerald-50 text-emerald-900 text-[10px] font-bold px-2 py-0.5 rounded mb-2">
+            BA (HONS) PRODUCT DESIGN
+          </div>
+          <h1 class="text-xl font-bold text-gray-900">Good morning, Chloe.</h1>
+          <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+            Accelerate your graduate showcase. Subsidize global submission fees, model fabrication, and logistics through the Innovation Tower Student Support scheme.
+          </p>
+
+          <button type="button" onclick="goToScreen('screen-m04')" class="w-full mt-4 py-3 bg-brand-dark text-white rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:bg-[#0d2218] transition-all">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>New Subsidy Application</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Subsidy Applications Section -->
+      <div class="px-4 mb-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-bold text-gray-900">Active Subsidy Applications</h2>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Card 1: SaloneSatellite -->
+          <article class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Application Status &amp; Tracking</h3>
+            <p class="font-bold text-gray-900 text-sm mt-0.5">SaloneSatellite 2026 Competition Entry &amp; Fabrication Support</p>
+
+            <!-- Stepper Component -->
+            <div class="mt-4 space-y-3.5 border-l-2 border-emerald-800 ml-3 pl-4 relative">
+              <div class="relative">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-emerald-800 text-white flex items-center justify-center text-[8px] font-bold">✓</span>
+                <p class="text-xs font-bold text-gray-900">1. Student Draft</p>
+                <p class="text-[11px] text-gray-500">Submitted Oct 24</p>
+              </div>
+
+              <div class="relative">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-lime-300 text-black flex items-center justify-center text-[9px] font-bold">2</span>
+                <p class="text-xs font-bold text-gray-900">2. Faculty Sign-off</p>
+                <p class="text-[11px] text-gray-500">Prof. Marcus Leung</p>
+              </div>
+
+              <div class="relative opacity-60">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-[9px] font-bold">3</span>
+                <p class="text-xs font-bold text-gray-900">3. SDO Review</p>
+                <p class="text-[11px] text-gray-500">Est. Nov 04</p>
+              </div>
+
+              <div class="relative opacity-60">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-[9px] font-bold">4</span>
+                <p class="text-xs font-bold text-gray-900">4. Payment</p>
+                <p class="text-[11px] text-gray-500">Via AutoPay</p>
+              </div>
+            </div>
+
+            <p class="text-[10px] text-gray-400 mt-4">Last updated 2 days ago</p>
+
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <button type="button" onclick="goToScreen('screen-m13')" class="py-2.5 rounded-lg bg-brand-dark text-white font-semibold text-xs text-center">
+                View Status details
+              </button>
+              <button type="button" onclick="alert('Advisor Marcus Leung contacted at marcus.leung@polyu.edu.hk');" class="py-2.5 rounded-lg border border-gray-300 text-gray-800 font-semibold text-xs text-center hover:bg-gray-50">
+                Contact Endorser
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 2: Kowloon Bio-Packaging -->
+          <article class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+            <h3 class="font-bold text-gray-900 text-sm">Kowloon Bio-Packaging — Sustainable</h3>
+            <p class="text-xs text-gray-500">PolyU Design Research &amp; Model Fabrication Reimbursement</p>
+
+            <!-- Stepper Complete -->
+            <div class="mt-4 space-y-3.5 border-l-2 border-emerald-800 ml-3 pl-4 relative">
+              <div class="relative">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-emerald-800 text-white flex items-center justify-center text-[8px] font-bold">✓</span>
+                <p class="text-xs font-bold text-gray-900">1. Student Draft</p>
+                <p class="text-[11px] text-gray-500">Completed Oct 18</p>
+              </div>
+
+              <div class="relative">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-emerald-800 text-white flex items-center justify-center text-[8px] font-bold">✓</span>
+                <p class="text-xs font-bold text-gray-900">2. Dossier Verified</p>
+                <p class="text-[11px] text-gray-500">Verified Oct 28</p>
+              </div>
+
+              <div class="relative">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-emerald-800 text-white flex items-center justify-center text-[8px] font-bold">✓</span>
+                <p class="text-xs font-bold text-gray-900">3. Approved</p>
+                <p class="text-[11px] text-gray-500">Passed SDO Review</p>
+              </div>
+
+              <div class="relative">
+                <span class="absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full bg-lime-400 text-black flex items-center justify-center text-[9px] font-bold">4</span>
+                <p class="text-xs font-bold text-gray-900">4. AutoPay</p>
+                <p class="text-[11px] text-gray-500">Nov 15, 2025</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Upcoming Calls Section -->
+      <div class="px-4 mb-6">
+        <h2 class="text-base font-bold text-gray-900 mb-3">Upcoming Calls</h2>
+        <div class="space-y-3">
+          <!-- Call Item 1 -->
+          <article class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+            <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 mb-2">
+              <i data-lucide="clock" class="w-3 h-3"></i> 14 Days Left
+            </span>
+            <h3 class="text-sm font-bold text-gray-900">iF Student Design Award 2026</h3>
+            <p class="text-xs text-gray-600 mt-0.5">Tier 1 · Global Design Excellence · 80% Entry Subsidy</p>
+            <p class="text-xs text-gray-500 mt-1">Berlin, Germany</p>
+            <button type="button" onclick="goToScreen('screen-m04')" class="w-full mt-3 py-2.5 bg-brand-dark text-white rounded-xl text-xs font-semibold hover:bg-emerald-950">
+              Apply Now
+            </button>
+          </article>
+
+          <!-- Call Item 2 -->
+          <article class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+            <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 mb-2">
+              <i data-lucide="clock" class="w-3 h-3"></i> 28 Days Left
+            </span>
+            <h3 class="text-sm font-bold text-gray-900">Golden Pin Concept Design Award</h3>
+            <p class="text-xs text-gray-600 mt-0.5">Tier 2 · Asian Regional Showcase · 70% Entry &amp; Shipping</p>
+            <p class="text-xs text-gray-500 mt-1">Taipei, Taiwan</p>
+            <button type="button" onclick="goToScreen('screen-m04')" class="w-full mt-3 py-2.5 bg-brand-dark text-white rounded-xl text-xs font-semibold hover:bg-emerald-950">
+              Details
+            </button>
+          </article>
+        </div>
+      </div>
+
+      <!-- Quick Resources -->
+      <div class="px-4 space-y-3">
+        <h2 class="text-base font-bold text-gray-900">Student Portals &amp; Resources</h2>
+        <div onclick="goToScreen('screen-m14')" class="bg-white p-4 rounded-xl border border-gray-200 flex items-center justify-between cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-50 text-brand-dark flex items-center justify-center">
+              <i data-lucide="receipt" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-gray-900">Upload Reimbursement Slips</p>
+              <p class="text-[11px] text-gray-500">Furnish verified official receipts</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+        </div>
+
+        <div onclick="goToScreen('screen-m09')" class="bg-white p-4 rounded-xl border border-gray-200 flex items-center justify-between cursor-pointer hover:bg-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-50 text-brand-dark flex items-center justify-center">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-gray-900">Pre-Approved Awards Index</p>
+              <p class="text-[11px] text-gray-500">Explore 45+ international competitions</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M04: Form Step 1 - Applicant Profile                   -->
+    <!-- ============================================================== -->
+    <section id="screen-m04" class="hidden flex-1 flex flex-col bg-white" aria-label="Subsidy Application Step 1">
+      <!-- Stepper Nav Header -->
+      <div class="border-b border-gray-200 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded text-gray-700 hover:bg-gray-100" aria-label="Back to dashboard">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </button>
+        <span class="font-bold text-sm text-gray-900">Subsidy Application</span>
+        <button type="button" onclick="goToScreen('screen-m08')" class="w-7 h-7 rounded-full bg-brand-dark text-white text-xs flex items-center justify-center">C</button>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto custom-scroll">
+        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">School of Design • Student Subsidy Scheme AY2025/26</p>
+        <h1 class="text-xl font-bold text-gray-900 leading-tight mb-4">Competition &amp; Award Subsidy Application</h1>
+
+        <!-- Step Phase Tracker -->
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-5">
+          <div class="flex items-center justify-between text-xs mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-brand-dark text-white font-bold text-xs flex items-center justify-center">01</span>
+              <div>
+                <span class="text-[10px] text-gray-500 uppercase font-semibold">Current Phase</span>
+                <p class="font-bold text-gray-900">Applicant Profile</p>
+              </div>
+            </div>
+            <span class="text-xs text-gray-500 font-medium">Step 1 of 4</span>
+          </div>
+          <!-- Progress bar -->
+          <div class="grid grid-cols-4 gap-1.5 mt-2">
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-gray-200"></div>
+            <div class="h-1.5 rounded-full bg-gray-200"></div>
+            <div class="h-1.5 rounded-full bg-gray-200"></div>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="flex items-center gap-2 mb-6">
+          <button type="button" class="flex-1 py-2 px-3 bg-gray-100 hover:bg-gray-200 text-xs font-medium rounded-xl flex items-center justify-center gap-1.5 text-gray-700">
+            <i data-lucide="history" class="w-3.5 h-3.5"></i> Prefill Previous Info
+          </button>
+          <button type="button" class="py-2 px-3 bg-gray-100 hover:bg-gray-200 text-xs font-medium rounded-xl flex items-center justify-center gap-1.5 text-gray-700">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print
+          </button>
+          <button type="button" class="py-2 px-3 bg-brand-dark text-white text-xs font-medium rounded-xl flex items-center justify-center gap-1.5">
+            <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> Save Draft
+          </button>
+        </div>
+
+        <h2 class="text-sm font-bold text-gray-900 mb-1">SECTION 1.0 — Applicant Profile &amp; Academic Standing</h2>
+        <p class="text-xs text-gray-500 mb-4">Verify your student identity card record and enrolled studio track within the School of Design.</p>
+
+        <!-- Form fields -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-800 mb-1.5">Full Name (English)</label>
+            <div class="flex gap-4 mb-2 text-xs font-medium">
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="radio" name="salutation" value="Mr" class="accent-brand-dark"> Mr
+              </label>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="radio" name="salutation" value="Ms" checked class="accent-brand-dark"> Ms
+              </label>
+            </div>
+            <input type="text" value="Chloe Chan" readonly class="w-full bg-gray-100 p-2.5 rounded-xl text-sm font-medium border border-gray-200 text-gray-800">
+          </div>
+
+          <div>
+            <label for="student-id-field" class="block text-xs font-bold text-gray-800 mb-1">Student ID Number</label>
+            <div class="relative">
+              <input id="student-id-field" type="text" value="21089412D" readonly class="w-full bg-gray-100 p-2.5 rounded-xl text-sm font-medium border border-gray-200 text-gray-800">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 absolute right-3 top-3"></i>
+            </div>
+          </div>
+
+          <div>
+            <label for="contact-phone-field" class="block text-xs font-bold text-gray-800 mb-1">Contact Mobile Number</label>
+            <input id="contact-phone-field" type="text" value="+852 9123 4567" class="w-full bg-gray-100 p-2.5 rounded-xl text-sm font-medium border border-gray-200 text-gray-800">
+          </div>
+
+          <div>
+            <label for="contact-email-field" class="block text-xs font-bold text-gray-800 mb-1">PolyU Student Connect Email</label>
+            <input id="contact-email-field" type="email" value="chloe.tm.chan@connect.polyu.hk" readonly class="w-full bg-gray-100 p-2.5 rounded-xl text-sm font-medium border border-gray-200 text-gray-800">
+          </div>
+
+          <!-- Study Year -->
+          <div class="pt-2">
+            <span class="block text-xs font-bold text-gray-800 mb-1">Current Study Year (BA Hons Scheme in Design)</span>
+            <div class="grid grid-cols-2 gap-2 text-xs font-medium text-center">
+              <button type="button" class="py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50">Year 1</button>
+              <button type="button" class="py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50">Year 2</button>
+              <button type="button" class="py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50">Year 3</button>
+              <button type="button" class="py-2.5 border-2 border-brand-dark bg-brand-light/30 text-brand-dark font-bold rounded-xl">Year 4</button>
+            </div>
+          </div>
+
+          <!-- Design Discipline -->
+          <div>
+            <label class="block text-xs font-bold text-gray-800 mb-2">Design Discipline / Specialism</label>
+            <div class="space-y-2">
+              <label class="flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 text-xs font-medium cursor-pointer">
+                <input type="radio" name="discipline" class="accent-brand-dark"> Advertising Design
+              </label>
+              <label class="flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 text-xs font-medium cursor-pointer">
+                <input type="radio" name="discipline" class="accent-brand-dark"> Communication Design
+              </label>
+              <label class="flex items-center gap-3 p-2.5 rounded-xl border-2 border-brand-dark bg-emerald-50/50 text-xs font-bold cursor-pointer">
+                <input type="radio" name="discipline" checked class="accent-brand-dark"> Interaction Design
+              </label>
+              <label class="flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 text-xs font-medium cursor-pointer">
+                <input type="radio" name="discipline" class="accent-brand-dark"> Product Design
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow CTA Buttons -->
+        <div class="mt-8 pt-4 border-t border-gray-200 space-y-2.5">
+          <button type="button" onclick="goToScreen('screen-m05')" class="w-full py-3.5 bg-brand-dark text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-emerald-950">
+            <span>Continue to Next Step</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+          <button type="button" onclick="goToScreen('screen-m03')" class="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl font-semibold text-xs text-center">
+            Save &amp; Exit to Portal
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M05: Form Step 2 - Competition Details                 -->
+    <!-- ============================================================== -->
+    <section id="screen-m05" class="hidden flex-1 flex flex-col bg-white" aria-label="Subsidy Application Step 2">
+      <!-- Nav Header -->
+      <div class="border-b border-gray-200 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m04')" class="p-1 rounded text-gray-700 hover:bg-gray-100" aria-label="Back to Step 1">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </button>
+        <span class="font-bold text-sm text-gray-900">Subsidy Application</span>
+        <button type="button" onclick="goToScreen('screen-m08')" class="w-7 h-7 rounded-full bg-brand-dark text-white text-xs flex items-center justify-center">C</button>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto custom-scroll">
+        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">School of Design • Student Subsidy Scheme AY2025/26</p>
+        <h1 class="text-xl font-bold text-gray-900 leading-tight mb-4">Competition &amp; Award Subsidy Application</h1>
+
+        <!-- Step Phase Tracker -->
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-5">
+          <div class="flex items-center justify-between text-xs mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-brand-dark text-white font-bold text-xs flex items-center justify-center">02</span>
+              <div>
+                <span class="text-[10px] text-gray-500 uppercase font-semibold">Current Phase</span>
+                <p class="font-bold text-gray-900">Competition Details</p>
+              </div>
+            </div>
+            <span class="text-xs text-gray-500 font-medium">Step 2 of 4</span>
+          </div>
+          <!-- Progress bar -->
+          <div class="grid grid-cols-4 gap-1.5 mt-2">
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-gray-200"></div>
+            <div class="h-1.5 rounded-full bg-gray-200"></div>
+          </div>
+        </div>
+
+        <h2 class="text-sm font-bold text-gray-900 mb-1">SECTION 2.0 — Competition &amp; Award Credentials</h2>
+        <p class="text-xs text-gray-500 mb-4">Specify verified competition information to determine subsidy reimbursement level.</p>
+
+        <div class="space-y-4">
+          <div>
+            <label for="award-title-field" class="block text-xs font-bold text-gray-800 mb-1">Official Competition / Award Title *</label>
+            <div class="relative">
+              <i data-lucide="trophy" class="w-4 h-4 absolute left-3 top-3.5 text-gray-400"></i>
+              <input id="award-title-field" type="text" value="iF Design Student Award 2026" class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-gray-200 text-sm font-medium">
+            </div>
+          </div>
+
+          <div>
+            <label for="award-url-field" class="block text-xs font-bold text-gray-800 mb-1">Official Competition / Entry URL *</label>
+            <div class="relative">
+              <i data-lucide="link" class="w-4 h-4 absolute left-3 top-3.5 text-gray-400"></i>
+              <input id="award-url-field" type="url" value="https://ifdesign.com/en/if-design-student-award-2026" class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-gray-200 text-xs font-mono text-gray-700">
+            </div>
+            <p class="text-[11px] text-emerald-700 mt-1 font-medium flex items-center gap-1">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i> Verified polyu-recognized tier registry link
+            </p>
+          </div>
+
+          <div>
+            <label for="award-category-select" class="block text-xs font-bold text-gray-800 mb-1">Competition Category / Submission Track *</label>
+            <select id="award-category-select" class="w-full p-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white">
+              <option selected>03 Sustainable Cities &amp; Communities</option>
+              <option>09 Industry, Innovation &amp; Infrastructure</option>
+              <option>12 Responsible Consumption</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="award-result-date" class="block text-xs font-bold text-gray-800 mb-1">Expected Result Announcement Date *</label>
+            <input id="award-result-date" type="text" value="18 / 06 / 2026" class="w-full p-2.5 rounded-xl border border-gray-200 text-sm font-medium">
+          </div>
+
+          <!-- Tier Cards -->
+          <div>
+            <label class="block text-xs font-bold text-gray-800 mb-2">Recognition Level &amp; Subsidy Tier Selection *</label>
+            <div class="space-y-3">
+              <!-- Tier 1 Selected -->
+              <div class="p-3.5 rounded-2xl border-2 border-brand-dark bg-emerald-50/40 relative">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-brand-dark text-white">Tier 1: International</span>
+                    <h3 class="font-bold text-sm text-gray-900 mt-1">Global Prestige Competitions</h3>
+                    <p class="text-xs text-gray-500">e.g. iF Design, Red Dot, IDEA, D&amp;AD</p>
+                  </div>
+                  <input type="radio" name="tier" checked class="accent-brand-dark mt-1">
+                </div>
+                <div class="mt-3 p-2.5 bg-white rounded-xl border border-emerald-200 flex justify-between items-center text-xs">
+                  <span class="font-bold text-brand-dark">80% fee subsidy</span>
+                  <span class="text-gray-500">Up to HK$ 5,000 max</span>
+                </div>
+              </div>
+
+              <!-- Tier 2 -->
+              <div class="p-3.5 rounded-2xl border border-gray-200 hover:border-gray-300">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-gray-100 text-gray-700">Tier 2: Regional Asian</span>
+                    <h3 class="font-bold text-sm text-gray-900 mt-1">Pan-Asia Recognitions</h3>
+                    <p class="text-xs text-gray-500">e.g. Good Design Award, Golden Pin, DFA</p>
+                  </div>
+                  <input type="radio" name="tier" class="accent-brand-dark mt-1">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow CTAs -->
+        <div class="mt-8 pt-4 border-t border-gray-200 space-y-2.5">
+          <button type="button" onclick="goToScreen('screen-m06')" class="w-full py-3.5 bg-brand-dark text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-emerald-950">
+            <span>Continue to Step 3: Project &amp; Financials</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+          <button type="button" onclick="goToScreen('screen-m04')" class="w-full py-2.5 text-gray-600 rounded-xl font-semibold text-xs text-center flex items-center justify-center gap-1">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Step 1
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M06: Form Step 3 - Project & Financials (+ VALIDATION) -->
+    <!-- ============================================================== -->
+    <section id="screen-m06" class="hidden flex-1 flex flex-col bg-white" aria-label="Subsidy Application Step 3">
+      <!-- Header -->
+      <div class="border-b border-gray-200 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m05')" class="p-1 rounded text-gray-700 hover:bg-gray-100" aria-label="Back to Step 2">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </button>
+        <span class="font-bold text-sm text-gray-900">Subsidy Application</span>
+        <button type="button" onclick="goToScreen('screen-m08')" class="w-7 h-7 rounded-full bg-brand-dark text-white text-xs flex items-center justify-center">C</button>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto custom-scroll">
+        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">School of Design • Student Subsidy Scheme AY2025/26</p>
+        <h1 class="text-xl font-bold text-gray-900 leading-tight mb-4">Competition &amp; Award Subsidy Application</h1>
+
+        <!-- Step Phase Tracker -->
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-5">
+          <div class="flex items-center justify-between text-xs mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-brand-dark text-white font-bold text-xs flex items-center justify-center">03</span>
+              <div>
+                <span class="text-[10px] text-gray-500 uppercase font-semibold">Current Phase</span>
+                <p class="font-bold text-gray-900">Project &amp; Financials</p>
+              </div>
+            </div>
+            <span class="text-xs text-gray-500 font-medium">Step 3 of 4</span>
+          </div>
+          <!-- Progress bar -->
+          <div class="grid grid-cols-4 gap-1.5 mt-2">
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-gray-200"></div>
+          </div>
+        </div>
+
+        <h2 class="text-sm font-bold text-gray-900 mb-1">SECTION 3.0 — Project Details &amp; Financial Request</h2>
+        <p class="text-xs text-gray-500 mb-4">Specify project affiliation, coursework linkage, and requested expense items.</p>
+
+        <div class="space-y-4">
+          <div>
+            <label for="project-title-input" class="block text-xs font-bold text-gray-800 mb-1">Title of Submitted Project / Design Entry *</label>
+            <input id="project-title-input" type="text" value="SproutOS: Adaptive Microclimate Growing Capsule" class="w-full bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-900">
+            <p class="text-[10px] text-gray-500 mt-1">Provide the exact title as declared in the competition portal.</p>
+          </div>
+
+          <!-- Team Structure -->
+          <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+            <span class="text-xs font-bold text-gray-900 block mb-2">Project Classification &amp; Team Structure *</span>
+            <div class="flex gap-4 text-xs font-medium mb-3">
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="radio" name="team-struct" class="accent-brand-dark"> Individual Project
+              </label>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="radio" name="team-struct" checked class="accent-brand-dark"> Group Project (Co-authored)
+              </label>
+            </div>
+
+            <!-- Member Chip -->
+            <div class="bg-white p-2.5 rounded-lg border border-gray-200 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-full bg-brand-dark text-white font-bold text-xs flex items-center justify-center">ML</div>
+                <div>
+                  <p class="text-xs font-bold text-gray-900">Matthew Lin</p>
+                  <p class="text-[10px] text-gray-500">Student ID: 21087431D — PolyU Enrolled</p>
+                </div>
+              </div>
+              <button type="button" class="text-gray-400 hover:text-red-500" aria-label="Remove team member"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+
+          <!-- Financial Expenses Form with Validation Target -->
+          <div class="space-y-3">
+            <label class="block text-xs font-bold text-gray-900">Subsidy Items Requested *</label>
+
+            <!-- Item 1: Entrance Fee -->
+            <div class="p-3.5 rounded-xl border border-gray-200 bg-white space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-gray-900 flex items-center gap-1.5">
+                  <input type="checkbox" checked class="accent-brand-dark"> Item 1: Entrance / Registration Fee
+                </span>
+                <span class="text-xs font-bold text-emerald-800">HK$ 1,020.00</span>
+              </div>
+              <p class="text-[11px] text-gray-500">EUR 150.00 equivalent at official school peg (80% tier allowance)</p>
+            </div>
+
+            <!-- Item 2: Shipping Allowance (Validation Requirement) -->
+            <div class="p-3.5 rounded-xl border border-gray-200 bg-white space-y-2" id="shipping-container">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-gray-900 flex items-center gap-1.5">
+                  <input type="checkbox" checked class="accent-brand-dark"> Item 2: Model Fabrication / Physical Shipping Allowance
+                </span>
+              </div>
+              <p class="text-[10px] text-gray-500">Maximum cap: HK$ 1,000 for standard shipping tier</p>
+
+              <div class="pt-1">
+                <label for="shipping-allowance-input" class="block text-xs font-semibold text-gray-700 mb-1">Estimated Subsidised Cost (HK$)</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-2.5 text-xs font-bold text-gray-500">HK$</span>
+                  <input id="shipping-allowance-input" type="number" value="450" class="w-full pl-11 pr-3 py-2 text-sm font-semibold rounded-lg border border-gray-300 focus:border-brand-dark outline-none">
+                </div>
+                <!-- Inline Error message placeholder -->
+                <p id="shipping-error-msg" class="hidden text-xs text-red-600 font-semibold mt-1.5 flex items-center gap-1">
+                  <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                  <span>Allowance exceeded: Physical shipping subsidy cannot exceed HK$1,000.</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Total Calculation Box -->
+            <div class="p-4 rounded-xl bg-brand-dark text-white flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase font-bold text-emerald-300">Total Requested Subsidy Grant</p>
+                <p class="text-xl font-bold" id="total-requested-display">HK$ 1,470.00</p>
+              </div>
+              <span class="text-[10px] bg-emerald-800/80 text-emerald-100 px-2.5 py-1 rounded-full font-medium">
+                ✓ Fully within student allowance
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation CTAs -->
+        <div class="mt-8 pt-4 border-t border-gray-200 space-y-2.5">
+          <button type="button" onclick="validateStep3AndProceed()" class="w-full py-3.5 bg-brand-dark text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-emerald-950">
+            <span>Continue to Step 4: Review &amp; Sign</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+          <button type="button" onclick="goToScreen('screen-m05')" class="w-full py-2.5 text-gray-600 rounded-xl font-semibold text-xs text-center flex items-center justify-center gap-1">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Step 2
+          </button>
+          <button type="button" onclick="goToScreen('screen-m03')" class="w-full py-2 text-gray-500 text-xs font-medium text-center">
+            Save &amp; Exit to Portal
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M07: Form Step 4 - Review & Sign                       -->
+    <!-- ============================================================== -->
+    <section id="screen-m07" class="hidden flex-1 flex flex-col bg-white" aria-label="Subsidy Application Step 4">
+      <div class="border-b border-gray-200 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m06')" class="p-1 rounded text-gray-700 hover:bg-gray-100" aria-label="Back to Step 3">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </button>
+        <span class="font-bold text-sm text-gray-900">Subsidy Application</span>
+        <button type="button" onclick="goToScreen('screen-m08')" class="w-7 h-7 rounded-full bg-brand-dark text-white text-xs flex items-center justify-center">C</button>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto custom-scroll">
+        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">School of Design • Student Subsidy Scheme AY2025/26</p>
+        <h1 class="text-xl font-bold text-gray-900 leading-tight mb-4">Competition &amp; Award Subsidy Application</h1>
+
+        <!-- Step Phase Tracker -->
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-5">
+          <div class="flex items-center justify-between text-xs mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-brand-dark text-white font-bold text-xs flex items-center justify-center">04</span>
+              <div>
+                <span class="text-[10px] text-gray-500 uppercase font-semibold">Current Phase</span>
+                <p class="font-bold text-gray-900">Review &amp; Sign</p>
+              </div>
+            </div>
+            <span class="text-xs text-gray-500 font-medium">Step 4 of 4</span>
+          </div>
+          <!-- Progress bar -->
+          <div class="grid grid-cols-4 gap-1.5 mt-2">
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+            <div class="h-1.5 rounded-full bg-brand-dark"></div>
+          </div>
+        </div>
+
+        <h2 class="text-sm font-bold text-gray-900 mb-1">SECTION 4.0 — Declarations &amp; Signatures</h2>
+        <p class="text-xs text-gray-500 mb-4">Confirm statutory undertakings, and apply cryptographic signatures.</p>
+
+        <!-- Undertaking Checkboxes -->
+        <div class="p-4 bg-emerald-50/50 rounded-2xl border border-emerald-200 mb-5 space-y-3">
+          <span class="text-xs font-bold text-emerald-950 uppercase tracking-wide block">Student Applicant Undertaking</span>
+          <label class="flex items-start gap-2.5 text-xs text-gray-800 cursor-pointer">
+            <input type="checkbox" checked class="accent-brand-dark mt-0.5">
+            <span>I declare that this entry is not supported by any other University fund, academic department, external research grant, or third-party sponsorship.</span>
+          </label>
+          <label class="flex items-start gap-2.5 text-xs text-gray-800 cursor-pointer">
+            <input type="checkbox" checked class="accent-brand-dark mt-0.5">
+            <span>I confirm that this application complies with all terms and regulations of the PolyU Design Subsidy Scheme document.</span>
+          </label>
+        </div>
+
+        <!-- Digital Signature Box -->
+        <div class="border border-gray-200 rounded-2xl p-4 mb-5">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-gray-800">Applicant Digital Signature</span>
+            <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">e-Identity Confirmed</span>
+          </div>
+          <div class="h-24 bg-gray-50 rounded-xl border border-dashed border-gray-300 flex items-center justify-center p-3 relative">
+            <span class="text-3xl signature-font text-brand-dark select-none">Chloe Chan</span>
+            <button type="button" class="absolute bottom-1 right-2 text-[10px] text-gray-400 hover:text-gray-700">Clear &amp; Resign</button>
+          </div>
+          <p class="text-[10px] text-gray-400 mt-2">Signature cryptographically seals the submission payload upon final click.</p>
+        </div>
+
+        <!-- Faculty Endorsement Routing -->
+        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200 mb-6">
+          <span class="text-xs font-bold text-gray-900 block mb-1">Faculty Endorsement Routing</span>
+          <p class="text-xs text-gray-500 mb-3">Target Studio Supervisor</p>
+          <div class="bg-white p-3 rounded-xl border border-gray-200 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-brand-dark text-white font-bold text-xs flex items-center justify-center">ML</div>
+            <div>
+              <p class="text-xs font-bold text-gray-900">Prof. Marcus Leung</p>
+              <p class="text-[11px] text-gray-500">Studio Lead / Discipline Leader — School of Design</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Submit Action -->
+        <div class="space-y-2.5">
+          <button type="button" onclick="submitApplicationFlow()" class="w-full py-3.5 bg-brand-dark text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-emerald-950 shadow-md">
+            <span>Submit Application for Endorsement</span>
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+          <button type="button" onclick="goToScreen('screen-m06')" class="w-full py-2.5 text-gray-600 rounded-xl font-semibold text-xs text-center flex items-center justify-center gap-1">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Step 3
+          </button>
+          <button type="button" onclick="goToScreen('screen-m03')" class="w-full py-2 text-gray-500 text-xs font-medium text-center">
+            Save &amp; Exit to Portal
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application Success Modal (Transition feedback) -->
+    <div id="success-modal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl">
+        <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="check-check" class="w-8 h-8"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-1">Application Submitted!</h3>
+        <p class="text-xs text-gray-600 mb-5">Your subsidy submission has been recorded and successfully routed to Prof. Marcus Leung for initial faculty verification.</p>
+        <button type="button" onclick="closeSuccessAndGoHome()" class="w-full py-3 bg-brand-dark text-white rounded-xl font-bold text-xs">
+          Return to Dashboard
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M08: My Account Screen                                 -->
+    <!-- ============================================================== -->
+    <section id="screen-m08" class="hidden flex-1 flex flex-col bg-white" aria-label="My Account">
+      <div class="border-b border-gray-100 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded-full text-gray-700 hover:bg-gray-100" aria-label="Close Account Screen">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <h2 class="text-base font-bold text-gray-900">My Account</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <div class="p-6 flex-1 overflow-y-auto">
+        <!-- Profile Avatar & Details -->
+        <div class="flex flex-col items-center text-center mb-6">
+          <div class="relative mb-3">
+            <div class="w-20 h-20 rounded-full bg-emerald-100 text-brand-dark font-bold text-2xl flex items-center justify-center border-2 border-emerald-300">
+              <i data-lucide="user" class="w-10 h-10 text-emerald-800"></i>
+            </div>
+            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center absolute bottom-0 right-0 border-2 border-white text-[10px]">✓</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900">CHOW Pui Wing (Chloe)</h3>
+          <p class="text-xs text-gray-500">BA (Hons) in Product Design</p>
+          <button type="button" onclick="goToScreen('screen-m01')" class="mt-3 px-4 py-2 rounded-full border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-50 inline-flex items-center gap-1.5">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Log out
+          </button>
+        </div>
+
+        <!-- Account List Items -->
+        <div class="space-y-1 border-t border-b border-gray-100 py-3 mb-6">
+          <div onclick="goToScreen('screen-m12')" class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 cursor-pointer">
+            <span class="text-xs font-semibold text-gray-800 flex items-center gap-3">
+              <i data-lucide="bell" class="w-4 h-4 text-gray-500"></i> Notifications
+            </span>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">3 New</span>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 cursor-pointer">
+            <span class="text-xs font-semibold text-gray-800 flex items-center gap-3">
+              <i data-lucide="settings" class="w-4 h-4 text-gray-500"></i> Settings
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 cursor-pointer">
+            <span class="text-xs font-semibold text-gray-800 flex items-center gap-3">
+              <i data-lucide="qr-code" class="w-4 h-4 text-gray-500"></i> QR for Mobile Login
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+        </div>
+
+        <!-- Accessibility Preferences -->
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Accessibility Settings</h4>
+          
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-gray-800">Use High Contrast UI</p>
+              <p class="text-[11px] text-gray-500">Increases border and text distinction</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer">
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-dark"></div>
+            </label>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-gray-800">Use a Dyslexia Friendly Font</p>
+              <p class="text-[11px] text-gray-500">Enhance letterform clarity</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer">
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-dark"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M09: Helpdesk Screen                                   -->
+    <!-- ============================================================== -->
+    <section id="screen-m09" class="hidden flex-1 flex flex-col bg-white" aria-label="Helpdesk & Support">
+      <div class="border-b border-gray-100 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded-full text-gray-700 hover:bg-gray-100" aria-label="Close Helpdesk">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <h2 class="text-base font-bold text-gray-900">PolyU Design Helpdesk</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <div class="p-6 flex-1 overflow-y-auto space-y-4">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-1">How can we help?</h3>
+          <p class="text-xs text-gray-600">Access self-serve resources, scheme documentation, advisory contact, or technical escalation.</p>
+        </div>
+
+        <!-- Help Cards -->
+        <div class="p-4 rounded-2xl border border-gray-200 hover:border-gray-300">
+          <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-800 mb-3">
+            <i data-lucide="help-circle" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-sm font-bold text-gray-900 mb-1">FAQ</h4>
+          <p class="text-xs text-gray-500 mb-4">Find instant answers regarding subsidy eligibility, funding limits, and review deadlines.</p>
+          <button type="button" class="w-full py-2.5 bg-brand-dark text-white rounded-xl text-xs font-semibold">View FAQ →</button>
+        </div>
+
+        <div class="p-4 rounded-2xl border border-gray-200 hover:border-gray-300">
+          <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-800 mb-3">
+            <i data-lucide="book" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-sm font-bold text-gray-900 mb-1">Documentation &amp; Tutorials</h4>
+          <p class="text-xs text-gray-500 mb-4">Follow step-by-step application walkthroughs and document formatting guides.</p>
+          <button type="button" class="w-full py-2.5 bg-brand-dark text-white rounded-xl text-xs font-semibold">Explore Guides →</button>
+        </div>
+
+        <div class="p-4 rounded-2xl border border-gray-200 hover:border-gray-300">
+          <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-800 mb-3">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-sm font-bold text-gray-900 mb-1">Contact Advisory</h4>
+          <p class="text-xs text-gray-500 mb-4">Connect with School of Design scheme coordinators for personalized guidance.</p>
+          <button type="button" class="w-full py-2.5 bg-brand-dark text-white rounded-xl text-xs font-semibold">Contact Advisor →</button>
+        </div>
+
+        <div class="p-4 rounded-2xl border border-gray-200 hover:border-gray-300">
+          <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-800 mb-3">
+            <i data-lucide="bug" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-sm font-bold text-gray-900 mb-1">Report a Problem</h4>
+          <p class="text-xs text-gray-500 mb-4">Submit a technical ticket for portal login glitches or form submission errors.</p>
+          <button type="button" class="w-full py-2.5 bg-brand-dark text-white rounded-xl text-xs font-semibold">Report Issue →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M10: Application History Screen                        -->
+    <!-- ============================================================== -->
+    <section id="screen-m10" class="hidden flex-1 flex flex-col bg-white" aria-label="Application History">
+      <div class="border-b border-gray-100 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded-full text-gray-700 hover:bg-gray-100" aria-label="Close Application History">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <h2 class="text-base font-bold text-gray-900">Application History</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto space-y-4">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900">Application History</h3>
+          <p class="text-xs text-gray-500">View and track the status of your previously submitted competition and award subsidy applications.</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="space-y-2">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-gray-400"></i>
+            <input type="text" placeholder="Search by competition, project name, or ID..." class="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-gray-200 bg-gray-50">
+          </div>
+          <div class="flex gap-2">
+            <select class="flex-1 p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium">
+              <option>2025/26 (Current)</option>
+              <option>2024/25</option>
+            </select>
+            <select class="flex-1 p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium">
+              <option>All Submitted</option>
+              <option>Approved</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Past Applications List -->
+        <div class="space-y-3 pt-2">
+          <!-- Item 1 -->
+          <article class="p-4 rounded-2xl border border-gray-200 bg-white shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">● Approved &amp; Payout Scheduled</span>
+            </div>
+            <h4 class="text-sm font-bold text-gray-900">iF Student Design Award 2026</h4>
+            <p class="text-xs text-gray-600">Bio-Degradable Medical Packaging System</p>
+            <div class="text-[11px] text-gray-500 pt-1 border-t border-gray-100">
+              <p>Submitted: 12 Oct 2025</p>
+              <p>Disbursement: 15 Nov 2025 (Autopay)</p>
+            </div>
+            <button type="button" onclick="goToScreen('screen-m13')" class="w-full py-2 bg-brand-dark text-white rounded-lg text-xs font-semibold">View Details →</button>
+          </article>
+
+          <!-- Item 2 -->
+          <article class="p-4 rounded-2xl border border-gray-200 bg-white shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">● Approved</span>
+            </div>
+            <h4 class="text-sm font-bold text-gray-900">Golden Pin Concept Design Award 2025</h4>
+            <p class="text-xs text-gray-600">Tactile Wayfinding for Visually Impaired</p>
+            <div class="text-[11px] text-gray-500 pt-1 border-t border-gray-100">
+              <p>Submitted: 18 Aug 2025</p>
+              <p>Disbursed on 30 Sep 2025</p>
+            </div>
+            <button type="button" onclick="goToScreen('screen-m13')" class="w-full py-2 bg-brand-dark text-white rounded-lg text-xs font-semibold">View Details →</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M11: Language Screen                                   -->
+    <!-- ============================================================== -->
+    <section id="screen-m11" class="hidden flex-1 flex flex-col bg-white" aria-label="Language Preferences">
+      <div class="border-b border-gray-100 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded-full text-gray-700 hover:bg-gray-100" aria-label="Close Language Settings">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <h2 class="text-base font-bold text-gray-900">Language</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <div class="p-6 flex-1 flex flex-col justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-1">Select Language</h3>
+          <p class="text-xs text-gray-600 mb-6">Choose your preferred interface language for the PolyU Design portal.</p>
+
+          <div class="space-y-3">
+            <label class="flex items-center justify-between p-4 rounded-2xl border-2 border-brand-dark bg-emerald-50/40 cursor-pointer">
+              <div class="flex items-center gap-3">
+                <i data-lucide="globe" class="w-5 h-5 text-brand-dark"></i>
+                <div>
+                  <p class="text-sm font-bold text-gray-900">English</p>
+                  <p class="text-xs text-gray-500">Default system language (EN-US)</p>
+                </div>
+              </div>
+              <input type="radio" name="lang" checked class="accent-brand-dark w-4 h-4">
+            </label>
+
+            <label class="flex items-center justify-between p-4 rounded-2xl border border-gray-200 hover:border-gray-300 cursor-pointer">
+              <div class="flex items-center gap-3">
+                <i data-lucide="languages" class="w-5 h-5 text-gray-500"></i>
+                <div>
+                  <p class="text-sm font-bold text-gray-900">繁體中文</p>
+                  <p class="text-xs text-gray-500">Chinese (Traditional) 香港特別行政區</p>
+                </div>
+              </div>
+              <input type="radio" name="lang" class="accent-brand-dark w-4 h-4">
+            </label>
+          </div>
+        </div>
+
+        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200 text-xs text-gray-600 flex gap-2.5">
+          <i data-lucide="info" class="w-4 h-4 text-emerald-800 flex-shrink-0 mt-0.5"></i>
+          <p>Grant forms, regulatory criteria, and formal exhibition submissions remain officially documented in English.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M12: Notifications Screen                              -->
+    <!-- ============================================================== -->
+    <section id="screen-m12" class="hidden flex-1 flex flex-col bg-white" aria-label="Notifications Ledger">
+      <div class="border-b border-gray-100 p-4 flex items-center justify-between">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded-full text-gray-700 hover:bg-gray-100" aria-label="Close Notifications">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <h2 class="text-base font-bold text-gray-900">Notifications</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto space-y-4">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900">Notifications</h3>
+          <p class="text-xs text-gray-500">Real-time alerts, faculty revisions, deadline tracking, and reimbursement actions.</p>
+        </div>
+
+        <!-- Filter tags -->
+        <div class="flex gap-2 overflow-x-auto pb-1 text-xs">
+          <button type="button" class="px-3 py-1.5 rounded-full bg-brand-dark text-white font-semibold">All Notifications</button>
+          <button type="button" class="px-3 py-1.5 rounded-full bg-red-100 text-red-700 font-semibold whitespace-nowrap">🚩 Red Flag / Urgent</button>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Notification 1 -->
+          <article class="p-4 rounded-2xl border border-red-200 bg-red-50/20 space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold">!</span>
+              <div>
+                <p class="text-xs font-bold text-red-900">Missing Document • 2 hours ago</p>
+                <p class="text-[10px] text-red-700">Resolve by 12 Nov 2025, 17:00 HKT</p>
+              </div>
+            </div>
+            <h4 class="text-sm font-bold text-gray-900">Bank Account Statement Proof Required for Claim #REC-2025-412</h4>
+            <p class="text-xs text-gray-600">Submit a bank statement matching your student ID to enable AutoPay disbursement.</p>
+            <button type="button" onclick="goToScreen('screen-m14')" class="w-full py-2 bg-brand-dark text-white rounded-lg text-xs font-semibold">Upload Bank Proof</button>
+          </article>
+
+          <!-- Notification 2 -->
+          <article class="p-4 rounded-2xl border border-gray-200 bg-white space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-xs font-bold">💬</span>
+              <div>
+                <p class="text-xs font-bold text-gray-900">Faculty Feedback • Yesterday</p>
+                <p class="text-[10px] text-gray-500">Prof. Marcus Leung</p>
+              </div>
+            </div>
+            <h4 class="text-sm font-bold text-gray-900">Faculty Endorsement Pending: Itemized Budget Clarification</h4>
+            <p class="text-xs text-gray-600">Provide two comparative vendor quotes for 3D prototyping to complete sign-off.</p>
+            <button type="button" onclick="goToScreen('screen-m06')" class="w-full py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg text-xs font-semibold">Revise Application Draft</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M13: Check Status Screen                               -->
+    <!-- ============================================================== -->
+    <section id="screen-m13" class="hidden flex-1 flex flex-col bg-white" aria-label="Application Status and Tracking">
+      <div class="border-b border-gray-100 p-4 flex items-center justify-between sticky top-0 bg-white z-20">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded-full text-gray-700 hover:bg-gray-100" aria-label="Close Status Screen">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <h2 class="text-base font-bold text-gray-900">Application Status &amp; Tracking</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto space-y-4">
+        <!-- Allowance ceiling progress card -->
+        <div class="bg-gray-900 text-white p-4 rounded-2xl shadow-sm">
+          <p class="text-[10px] uppercase font-bold text-emerald-400">AY 2025/26 Subsidy Cap Remaining</p>
+          <p class="text-xl font-bold mt-0.5">HK$ 9,200 <span class="text-xs font-normal text-gray-300">available</span></p>
+          <div class="w-full bg-gray-800 h-2 rounded-full mt-3 overflow-hidden">
+            <div class="bg-emerald-500 h-2 rounded-full" style="width: 61%"></div>
+          </div>
+          <div class="flex justify-between text-[10px] text-gray-400 mt-2">
+            <span>61% Available</span>
+            <span>HK$ 5,800 Claimed (39%)</span>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-bold text-gray-900">Active Submissions</h3>
+
+        <!-- Status Card List -->
+        <div class="space-y-3">
+          <div class="p-3.5 rounded-xl border border-gray-200 bg-white space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-gray-900">SaloneSatellite 2026 Entry</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700">Action Required</span>
+            </div>
+            <div class="flex justify-between text-xs text-gray-600">
+              <span>Submitted: 24/10/2025</span>
+              <span class="font-bold text-gray-900">HK$ 3,800</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl border border-gray-200 bg-white space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-gray-900">Red Dot Award: Concept 2026</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">In Review</span>
+            </div>
+            <div class="flex justify-between text-xs text-gray-600">
+              <span>Submitted: 18/10/2025</span>
+              <span class="font-bold text-gray-900">HK$ 2,500</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl border border-gray-200 bg-white space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-gray-900">Kowloon Bio-Packaging Materials</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Completed</span>
+            </div>
+            <div class="flex justify-between text-xs text-gray-600">
+              <span>Settled: 30/10/2025</span>
+              <span class="font-bold text-gray-900">HK$ 3,500</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" onclick="goToScreen('screen-m04')" class="w-full py-3 bg-brand-dark text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2">
+          <i data-lucide="plus" class="w-4 h-4"></i> Apply Now
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SCREEN M14: Claim Reimbursement Screen                        -->
+    <!-- ============================================================== -->
+    <section id="screen-m14" class="hidden flex-1 flex flex-col bg-white" aria-label="Claim Reimbursement">
+      <div class="border-b border-gray-100 p-4 flex items-center justify-between sticky top-0 bg-white z-20">
+        <button type="button" onclick="goToScreen('screen-m03')" class="p-1 rounded-full text-gray-700 hover:bg-gray-100" aria-label="Close Claim Reimbursement">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <h2 class="text-base font-bold text-gray-900">Claim Reimbursement</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto space-y-4">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900">Claim Reimbursement</h3>
+          <p class="text-xs text-gray-500">Submit verified expense receipts and transaction vouchers for accredited competition subsidies.</p>
+        </div>
+
+        <!-- Remaining Allowance Box -->
+        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
+          <div class="flex justify-between text-xs font-semibold text-emerald-950 mb-1">
+            <span>Available Allowance</span>
+            <span>Cap: HK$ 15,000</span>
+          </div>
+          <p class="text-xl font-bold text-brand-dark">HK$ 10,000 <span class="text-xs font-normal">left</span></p>
+          <div class="w-full bg-emerald-200 h-2 rounded-full mt-2 overflow-hidden">
+            <div class="bg-brand-dark h-2 rounded-full" style="width: 66%"></div>
+          </div>
+        </div>
+
+        <!-- Expense Input Form -->
+        <div class="p-4 rounded-2xl border border-gray-200 space-y-3">
+          <span class="text-xs font-bold text-gray-900 block">Competition &amp; Fabrication</span>
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-600 mb-1">Competition / Project Name</label>
+            <select class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium">
+              <option>iF Design Student 2026</option>
+              <option>Golden Pin Concept 2025</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-600 mb-1">Expense Category</label>
+            <select class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium">
+              <option>Specimen Fabrication &amp; Shipping</option>
+              <option>Registration / Entry Fee</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-600 mb-1">Claim Amount (HKD)</label>
+            <input type="text" value="1470.00" class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs font-semibold">
+          </div>
+
+          <!-- Document Upload Buttons -->
+          <div class="pt-2 space-y-2">
+            <p class="text-xs font-bold text-gray-800">Required Receipts &amp; Proofs</p>
+            <div class="p-3 bg-gray-50 rounded-xl border border-dashed border-gray-300 flex items-center justify-between text-xs">
+              <span class="flex items-center gap-2"><i data-lucide="receipt" class="w-4 h-4 text-gray-500"></i> Official Invoice</span>
+              <button type="button" class="px-3 py-1 bg-brand-dark text-white rounded text-[11px] font-semibold">Upload</button>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-xl border border-dashed border-gray-300 flex items-center justify-between text-xs">
+              <span class="flex items-center gap-2"><i data-lucide="credit-card" class="w-4 h-4 text-gray-500"></i> Payment Proof / Card Slip</span>
+              <button type="button" class="px-3 py-1 bg-brand-dark text-white rounded text-[11px] font-semibold">Upload</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disbursement Account Card -->
+        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200 space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-gray-900">Disbursement Account</span>
+            <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">✓ Verified</span>
+          </div>
+          <p class="text-[11px] text-gray-500">Disbursements are credited via AutoPay to your registered student bank account linked with NetID.</p>
+          <div class="p-3 bg-white rounded-xl border border-gray-200 text-xs space-y-1">
+            <p class="font-bold text-gray-900">Hang Seng Bank (024)</p>
+            <p class="text-gray-600 font-mono">•••• •••• •••• 001</p>
+            <p class="text-[10px] text-emerald-700 font-medium">NetID Matched: CHOW PUI WING</p>
+          </div>
+        </div>
+
+        <button type="button" onclick="alert('Reimbursement claim submitted for disbursement review.'); goToScreen('screen-m03');" class="w-full py-3.5 bg-brand-dark text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-emerald-950">
+          <span>Submit Claim</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- Vanilla SPA State & Validation Script                         -->
+  <!-- ============================================================== -->
+  <script>
+    // List of all screen container IDs in the SPA
+    const screenIds = [
+      'screen-m01', // Sign In
+      'screen-m02', // Menu
+      'screen-m03', // Dashboard
+      'screen-m04', // App Step 1
+      'screen-m05', // App Step 2
+      'screen-m06', // App Step 3 (Financials with validation)
+      'screen-m07', // App Step 4 (Review & Sign)
+      'screen-m08', // My Account
+      'screen-m09', // Helpdesk
+      'screen-m10', // Application History
+      'screen-m11', // Language
+      'screen-m12', // Notifications
+      'screen-m13', // Check Status
+      'screen-m14'  // Claim Reimbursement
+    ];
+
+    /**
+     * Toggles Tailwind 'hidden' class to transition smoothly between screens
+     * @param {string} targetScreenId 
+     */
+    function goToScreen(targetScreenId) {
+      screenIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id === targetScreenId) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+      // Scroll to top of viewport
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * Specific Step 3 Financials Validation Logic:
+     * Disallows Shipping Allowance greater than HK$ 1,000
+     */
+    function validateStep3AndProceed() {
+      const shippingInput = document.getElementById('shipping-allowance-input');
+      const errorMsg = document.getElementById('shipping-error-msg');
+      const shippingVal = parseFloat(shippingInput.value) || 0;
+
+      if (shippingVal > 1000) {
+        // Show validation error and prevent progression
+        errorMsg.classList.remove('hidden');
+        shippingInput.classList.add('border-red-500', 'bg-red-50');
+        shippingInput.focus();
+      } else {
+        // Clear errors and allow progression to M07
+        errorMsg.classList.add('hidden');
+        shippingInput.classList.remove('border-red-500', 'bg-red-50');
+        goToScreen('screen-m07');
+      }
+    }
+
+    // Dynamic total re-calculation on input change in M06
+    document.addEventListener('DOMContentLoaded', () => {
+      const shippingInput = document.getElementById('shipping-allowance-input');
+      const totalDisplay = document.getElementById('total-requested-display');
+      if (shippingInput && totalDisplay) {
+        shippingInput.addEventListener('input', (e) => {
+          const val = parseFloat(e.target.value) || 0;
+          const total = 1020 + val;
+          totalDisplay.textContent = `HK$ ${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        });
+      }
+    });
+
+    /**
+     * Submit application flow on M07:
+     * Displays a success confirmation dialog, then routes to M03
+     */
+    function submitApplicationFlow() {
+      const modal = document.getElementById('success-modal');
+      modal.classList.remove('hidden');
+    }
+
+    function closeSuccessAndGoHome() {
+      const modal = document.getElementById('success-modal');
+      modal.classList.add('hidden');
+      goToScreen('screen-m03');
+    }
+
+    // Initialize Lucide icons on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
